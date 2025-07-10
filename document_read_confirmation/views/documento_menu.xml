@@ -1,0 +1,32 @@
+<odoo>
+    <record id="action_documento_admin" model="ir.actions.act_window">
+        <field name="name">Administrar Documentos</field>
+        <field name="res_model">documento.interno</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="document_read_confirmation.documento_interno_view_tree_admin"/>
+        <field name="groups_id" eval="[(4, ref('document_read_confirmation.group_documento_admin'))]"/>
+    </record>
+
+    <record id="action_documento_lectura" model="ir.actions.act_window">
+        <field name="name">Mis Documentos por Leer</field>
+        <field name="res_model">documento.interno</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="document_read_confirmation.view_documento_interno_tree"/>
+        <field name="context">{'form_view_ref': 'document_read_confirmation.view_documento_interno_form_lectura'}</field>
+        <field name="domain">[('required_reader_ids', 'in', [uid])]</field>
+    </record>
+
+
+    <!-- Menús -->
+    <menuitem id="menu_documento_root" name="Documentos Internos"/>
+    <menuitem id="menu_documento_admin"
+              name="Gestión de Documentos"
+              parent="menu_documento_root"
+              groups="document_read_confirmation.group_documento_admin"
+              action="document_read_confirmation.action_documento_admin"/>
+
+    <menuitem id="menu_documento_lectura"
+              name="Mis Documentos por Leer"
+              parent="menu_documento_root"
+              action="document_read_confirmation.action_documento_lectura"/>
+</odoo>
